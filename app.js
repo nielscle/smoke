@@ -127,6 +127,8 @@ function setScreen(id){
   $$('.screen').forEach(s=>s.classList.toggle('active',s.id===id));
   $$('.nav-item[data-screen]').forEach(n=>n.classList.toggle('active',n.dataset.screen===id));
   closeOverlay('moreMenu');
+  const topMoreBtn = $('#topMoreBtn');
+  if(topMoreBtn) topMoreBtn.setAttribute('aria-expanded','false');
   window.scrollTo({top:0,behavior:'smooth'});
   if(id==='progress') renderProgress();
   if(id==='finance') renderFinance();
@@ -140,7 +142,10 @@ function closeOverlay(id){
   const el = $('#'+id); if(!el) return;
   el.classList.add('hidden'); el.setAttribute('aria-hidden','true');
   document.body.style.overflow='';
-  if(id==='moreMenu') $('#moreMenuBtn').setAttribute('aria-expanded','false');
+  if(id==='moreMenu'){
+    const topMoreBtn = $('#topMoreBtn');
+    if(topMoreBtn) topMoreBtn.setAttribute('aria-expanded','false');
+  }
 }
 
 function renderApp(){
@@ -428,7 +433,7 @@ $('#saveSlipBtn').addEventListener('click',()=>{
   closeOverlay('slipModal'); updateDashboard(); showToast('Geregistreerd. Ga vanaf nu direct verder.');
 });
 
-$('#moreMenuBtn').addEventListener('click',()=>{$('#moreMenuBtn').setAttribute('aria-expanded','true');openOverlay('moreMenu');});
+$('#topMoreBtn').addEventListener('click',()=>{$('#topMoreBtn').setAttribute('aria-expanded','true');openOverlay('moreMenu');});
 $('#menuSources').addEventListener('click',()=>{closeOverlay('moreMenu');setScreen('body');setTimeout(()=>$('.source-card').scrollIntoView({behavior:'smooth',block:'center'}),250);});
 $('#menuReset').addEventListener('click',()=>{closeOverlay('moreMenu');if(confirm('Wil je alle lokale gegevens verwijderen en opnieuw beginnen?')){localStorage.clear();location.reload();}});
 $$('[data-close]').forEach(btn=>btn.addEventListener('click',()=>closeOverlay(btn.dataset.close)));

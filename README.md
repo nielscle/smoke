@@ -12,6 +12,8 @@ python3 -m http.server 8080
 Open daarna `http://localhost:8080`.
 
 ## Nieuwe versie
+- Financiële module als zelfstandige tab in de hoofdnavigatie
+- Meer-menu verplaatst naar de bovenbalk voor een rustige navigatie
 - 51 gezondheidsmijlpalen van 20 minuten tot 15 jaar
 - Dagelijkse mijlpalen in de eerste twee weken
 - Wekelijkse mijlpalen tot drie maanden
