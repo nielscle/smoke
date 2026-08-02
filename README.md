@@ -25,3 +25,7 @@ Open daarna `http://localhost:8080`.
 
 ## Medische inhoud
 De app geeft algemene gezondheidsinformatie, geen diagnose of persoonlijke risicoberekening. De tijdlijnen zijn algemene gemiddelden en verschillen per persoon. Voor publicatie in een appstore is inhoudelijke controle door een arts of stoppen-met-rokenprofessional aan te raden.
+
+
+## Financiële berekening
+De investeringsmodule rekent met de geschatte wekelijkse uitgave aan sigaretten op basis van sigaretten per dag, pakgrootte en pakjesprijs. De gebruiker kan een indicatief gemiddeld jaarrendement en extra maandinleg instellen. De uitkomsten zijn scenario’s en geen financieel advies of gegarandeerd rendement. Kosten, belastingen en koersschommelingen zijn niet afzonderlijk verwerkt.

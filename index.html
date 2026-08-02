@@ -102,6 +102,12 @@
           <span><strong>Ik heb nu trek</strong><small>Start een begeleide interventie</small></span>
           <b>›</b>
         </button>
+
+        <button id="financeShortcut" class="feature-link finance-shortcut" type="button">
+          <span class="feature-icon">€</span>
+          <span><strong>Investeer je rookgeld</strong><small>Bekijk wat je besparing op termijn kan worden</small></span>
+          <b>›</b>
+        </button>
       </section>
 
       <section id="body" class="screen" aria-labelledby="journeyTitle">
@@ -189,6 +195,54 @@
         </article>
       </section>
 
+
+      <section id="finance" class="screen" aria-labelledby="financeTitle">
+        <div class="section-heading top-heading">
+          <div><span class="eyebrow">ROOKGELD INVESTEREN</span><h2 id="financeTitle">Wat had je geld kunnen worden?</h2></div>
+        </div>
+        <p class="screen-intro">Een rekenvoorbeeld op basis van jouw pakjesprijs en rooktempo. Rendementen zijn aannames, geen garantie.</p>
+
+        <article class="finance-hero">
+          <span class="eyebrow light">JOUW POTENTIËLE WEEKINLEG</span>
+          <h2 id="weeklyInvestment">€ 0</h2>
+          <p><span id="packsPerWeek">0</span> pakjes per week × <span id="financePackPrice">€ 0</span></p>
+          <div class="finance-now-grid">
+            <div><span>Sinds je stopte ingelegd</span><strong id="investedSinceQuit">€ 0</strong></div>
+            <div><span>Waarde bij gekozen scenario</span><strong id="valueSinceQuit">€ 0</strong></div>
+          </div>
+        </article>
+
+        <article class="surface finance-settings">
+          <div class="card-title"><div><span class="eyebrow">AANNAME</span><h3>Kies een scenario</h3></div><span>jaarlijks gemiddeld</span></div>
+          <div class="scenario-grid" role="radiogroup" aria-label="Rendementsscenario">
+            <button class="scenario-btn" data-return="0" type="button"><strong>0%</strong><span>Niet beleggen</span></button>
+            <button class="scenario-btn" data-return="3" type="button"><strong>3%</strong><span>Voorzichtig</span></button>
+            <button class="scenario-btn active" data-return="6" type="button"><strong>6%</strong><span>Brede ETF</span></button>
+            <button class="scenario-btn" data-return="8" type="button"><strong>8%</strong><span>Groei</span></button>
+          </div>
+          <label class="return-slider">Verwacht gemiddeld rendement <output id="returnOut">6,0%</output>
+            <input id="returnRate" type="range" min="0" max="12" step="0.5" value="6">
+          </label>
+          <label>Extra vaste inleg per maand
+            <div class="input-prefix"><span>€</span><input id="extraMonthly" type="number" min="0" max="10000" step="5" value="0"></div>
+          </label>
+        </article>
+
+        <article class="surface finance-chart-card">
+          <div class="card-title"><div><span class="eyebrow">VERMOGENSGROEI</span><h3>Inleg versus mogelijke groei</h3></div><span id="chartScenario">6,0% per jaar</span></div>
+          <div id="financeChart" class="finance-chart"></div>
+          <div class="chart-legend"><span><i class="legend-contribution"></i>Eigen inleg</span><span><i class="legend-growth"></i>Mogelijke groei</span></div>
+        </article>
+
+        <div class="section-heading"><div><span class="eyebrow">TIJDLIJN</span><h2>Van weken tot jaren</h2></div></div>
+        <div id="investmentTimeline" class="investment-timeline"></div>
+
+        <article class="finance-note">
+          <strong>Belangrijk</strong>
+          <p>Dit is een indicatieve berekening met een constant gemiddeld rendement, wekelijkse inleg en herbelegging. Werkelijke aandelen- en ETF-rendementen schommelen, kosten en belastingen zijn niet meegenomen en verlies is mogelijk.</p>
+        </article>
+      </section>
+
       <section id="progress" class="screen" aria-labelledby="progressTitle">
         <div class="section-heading top-heading"><div><span class="eyebrow">VOORTGANG</span><h2 id="progressTitle">Wat je al hebt opgebouwd</h2></div></div>
         <div class="progress-summary">
@@ -223,6 +277,7 @@
       <button data-screen="today" class="nav-item active" type="button"><span class="nav-glyph">⌂</span><small>Vandaag</small></button>
       <button data-screen="body" class="nav-item" type="button"><span class="nav-glyph">◎</span><small>Gezondheid</small></button>
       <button data-screen="craving" class="nav-item main" type="button"><span class="nav-glyph">⚡</span><small>Trek</small></button>
+      <button data-screen="finance" class="nav-item" type="button"><span class="nav-glyph">€</span><small>Investeren</small></button>
       <button data-screen="progress" class="nav-item" type="button"><span class="nav-glyph">↗</span><small>Voortgang</small></button>
       <button id="moreMenuBtn" class="nav-item" type="button" aria-expanded="false"><span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span><small>Meer</small></button>
     </nav>

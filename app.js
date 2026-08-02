@@ -129,6 +129,7 @@ function setScreen(id){
   closeOverlay('moreMenu');
   window.scrollTo({top:0,behavior:'smooth'});
   if(id==='progress') renderProgress();
+  if(id==='finance') renderFinance();
 }
 function openOverlay(id){
   const el = $('#'+id); if(!el) return;
@@ -234,6 +235,57 @@ function renderHealthBars(hours){
   }).join('');
 }
 
+
+function investmentProjection(weeklyContribution, annualRate, weeks){
+  const rate = Math.max(0, annualRate) / 100 / 52;
+  const contribution = Math.max(0, weeklyContribution);
+  const periods = Math.max(0, weeks);
+  const invested = contribution * periods;
+  const value = rate === 0 ? invested : contribution * ((Math.pow(1 + rate, periods) - 1) / rate);
+  return { invested, value, profit: Math.max(0, value - invested) };
+}
+
+function compactEuro(value){
+  if(value >= 1000000) return `€${(value/1000000).toFixed(1).replace('.',',')} mln`;
+  if(value >= 1000) return `€${Math.round(value/1000)}k`;
+  return euro(value);
+}
+
+function renderFinance(){
+  const profile = getProfile(); if(!profile) return;
+  const rate = Number($('#returnRate').value || 0);
+  const extraMonthly = Math.max(0, Number($('#extraMonthly').value || 0));
+  const packsWeek = profile.cigsPerDay * 7 / profile.packSize;
+  const cigaretteWeekly = packsWeek * profile.packPrice;
+  const weeklyContribution = cigaretteWeekly + extraMonthly * 12 / 52;
+  const elapsedWeeks = elapsed(profile).days / 7;
+  const current = investmentProjection(weeklyContribution, rate, elapsedWeeks);
+
+  $('#weeklyInvestment').textContent = euro(weeklyContribution);
+  $('#packsPerWeek').textContent = packsWeek.toFixed(1).replace('.',',');
+  $('#financePackPrice').textContent = euro(profile.packPrice);
+  $('#investedSinceQuit').textContent = euro(current.invested);
+  $('#valueSinceQuit').textContent = euro(current.value);
+  $('#returnOut').textContent = `${rate.toFixed(1).replace('.',',')}%`;
+  $('#chartScenario').textContent = `${rate.toFixed(1).replace('.',',')}% per jaar`;
+
+  const horizons = [
+    ['1 week',1],['1 maand',4.345],['3 maanden',13.035],['6 maanden',26.07],
+    ['1 jaar',52],['3 jaar',156],['5 jaar',260],['10 jaar',520],['15 jaar',780],['20 jaar',1040]
+  ];
+  const projections = horizons.map(([label,weeks])=>({label,weeks,...investmentProjection(weeklyContribution,rate,weeks)}));
+  $('#investmentTimeline').innerHTML = projections.map(item=>`<article class="investment-card"><div class="investment-period">${item.label}</div><div class="investment-details"><span>Geschatte waarde</span><strong>${euro(item.value)}</strong><span>Eigen inleg ${euro(item.invested)}</span></div><div class="investment-profit"><span>Mogelijke groei</span><strong>+ ${euro(item.profit)}</strong></div></article>`).join('');
+
+  const chartItems = projections.filter(x=>['1 jaar','3 jaar','5 jaar','10 jaar','15 jaar','20 jaar'].includes(x.label));
+  const maxValue = Math.max(...chartItems.map(x=>x.value),1);
+  $('#financeChart').innerHTML = chartItems.map(item=>{
+    const totalHeight = Math.max(5,item.value/maxValue*150);
+    const contributionHeight = item.value ? totalHeight * item.invested/item.value : 0;
+    const growthHeight = Math.max(0,totalHeight-contributionHeight);
+    return `<div class="finance-bar-wrap"><span class="finance-bar-value" style="bottom:${totalHeight+5}px">${compactEuro(item.value)}</span><div class="finance-bar" style="height:${totalHeight}px"><i class="contribution" style="height:${contributionHeight}px"></i><i class="growth" style="height:${growthHeight}px"></i></div><span class="finance-bar-label">${item.label.replace(' jaar',' jr')}</span></div>`;
+  }).join('');
+}
+
 function renderProgress(){ updateDashboard(); }
 
 function renderCheckinHistory(){
@@ -308,6 +360,18 @@ $('#onboardingForm').addEventListener('submit',event=>{
 $$('.nav-item[data-screen]').forEach(btn=>btn.addEventListener('click',()=>setScreen(btn.dataset.screen)));
 $('#fullJourneyShortcut').addEventListener('click',()=>setScreen('body'));
 $('#cravingShortcut').addEventListener('click',()=>setScreen('craving'));
+$('#financeShortcut').addEventListener('click',()=>setScreen('finance'));
+$$('.scenario-btn').forEach(btn=>btn.addEventListener('click',()=>{
+  $('#returnRate').value=btn.dataset.return;
+  $$('.scenario-btn').forEach(x=>x.classList.toggle('active',x===btn));
+  renderFinance();
+}));
+$('#returnRate').addEventListener('input',()=>{
+  const value=Number($('#returnRate').value);
+  $$('.scenario-btn').forEach(x=>x.classList.toggle('active',Number(x.dataset.return)===value));
+  renderFinance();
+});
+$('#extraMonthly').addEventListener('input',renderFinance);
 $$('.filter-chip').forEach(btn=>btn.addEventListener('click',()=>{
   activeJourneyFilter=btn.dataset.filter;
   $$('.filter-chip').forEach(x=>x.classList.toggle('active',x===btn));
