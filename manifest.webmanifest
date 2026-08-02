@@ -1,0 +1,10 @@
+{
+  "name":"Reclaim — rookvrij herstellen",
+  "short_name":"Reclaim",
+  "start_url":"./index.html",
+  "display":"standalone",
+  "background_color":"#eef4f0",
+  "theme_color":"#176b50",
+  "lang":"nl",
+  "description":"Volg hoe je lichaam herstelt nadat je stopt met roken."
+}

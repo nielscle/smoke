@@ -1,22 +1,27 @@
-# Reclaim — stoppen-met-roken health app
+# Reclaim
 
-Een werkend front-end prototype met:
-- Persoonlijke onboarding
-- Dagelijks gezondheidsverhaal
-- Rookvrije tijd, geldbesparing en niet-gerookte sigaretten
-- Gezondheidstijdlijnen voor hersenen, longen, hart, bloed en huid
-- Craving-noodinterventie van vijf minuten
-- Voortgang, health bars, spaardoel en dagelijkse check-in
-- Lokale opslag via localStorage
+Een mobiele webapp die zichtbaar maakt hoe het lichaam herstelt na stoppen met roken.
 
-## Starten
-Open `index.html` in een moderne browser.
+## Openen
+Open `index.html` direct in een browser. Voor volledige offline-installatie via de service worker is een lokale webserver nodig, bijvoorbeeld:
 
-Voor lokaal serveren:
 ```bash
 python3 -m http.server 8080
 ```
+
 Open daarna `http://localhost:8080`.
 
-## Belangrijk
-De gezondheidsinformatie in deze demo is algemeen en indicatief. Voor een publieke release moeten claims medisch worden gevalideerd, van bronverwijzingen worden voorzien en juridisch worden beoordeeld.
+## Functies
+- Persoonlijke onboarding en rookvrije teller
+- Complete gezondheidstijdlijn tot 15 jaar
+- Filters en verdieping per lichaamsgebied
+- 5-minuten en 90-seconden craving-interventie
+- Registratie van cravings en uitglijders
+- Dagelijkse check-ins met zevendaagse trend
+- Geldbesparing en spaardoel
+- Bewerkbaar profiel
+- Offline ondersteuning als PWA
+- Lokale opslag in de browser
+
+## Medische inhoud
+De app geeft algemene gezondheidsinformatie, geen diagnose of persoonlijke risicoberekening. Kernmijlpalen zijn gebaseerd op publieksinformatie van CDC, NHS en American Cancer Society. Voor publicatie in een appstore is inhoudelijke controle door een arts of stoppen-met-rokenprofessional aan te raden.
