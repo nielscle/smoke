@@ -16,10 +16,7 @@
         <span class="eyebrow">RECLAIM</span>
         <h1 id="greeting">Jouw herstel</h1>
       </div>
-      <div class="top-actions">
-        <button id="topMoreBtn" class="icon-btn menu-icon-btn" type="button" aria-label="Meer opties" aria-expanded="false">•••</button>
-        <button id="profileBtn" class="icon-btn" type="button" aria-label="Profiel bekijken">NC</button>
-      </div>
+      <button id="profileBtn" class="icon-btn" type="button" aria-label="Profiel bekijken">NC</button>
     </header>
 
     <main id="mainContent">
@@ -280,8 +277,8 @@
       <button data-screen="today" class="nav-item active" type="button"><span class="nav-glyph">⌂</span><small>Vandaag</small></button>
       <button data-screen="body" class="nav-item" type="button"><span class="nav-glyph">◎</span><small>Gezondheid</small></button>
       <button data-screen="craving" class="nav-item main" type="button"><span class="nav-glyph">⚡</span><small>Trek</small></button>
-      <button data-screen="finance" class="nav-item" type="button"><span class="nav-glyph">€</span><small>Investeren</small></button>
       <button data-screen="progress" class="nav-item" type="button"><span class="nav-glyph">↗</span><small>Voortgang</small></button>
+      <button id="moreMenuBtn" class="nav-item" type="button" aria-expanded="false"><span class="hamburger" aria-hidden="true"><i></i><i></i><i></i></span><small>Meer</small></button>
     </nav>
   </div>
 
@@ -292,6 +289,7 @@
       <div class="sheet-header"><div><span class="eyebrow">RECLAIM</span><h3 id="moreTitle">Meer</h3></div><button class="icon-btn" data-close="moreMenu" type="button">×</button></div>
       <div class="more-list">
         <button id="menuEditProfile" class="more-option" type="button"><span>◌</span><div><strong>Profiel aanpassen</strong><small>Stopdatum en rookgegevens wijzigen</small></div><b>›</b></button>
+        <button id="menuFinance" class="more-option" type="button"><span>€</span><div><strong>Investeren</strong><small>Bekijk wat je besparing kan opbouwen</small></div><b>›</b></button>
         <button id="menuSources" class="more-option" type="button"><span>i</span><div><strong>Bronnen en uitleg</strong><small>Bekijk medische onderbouwing</small></div><b>›</b></button>
         <button id="menuReset" class="more-option danger-option" type="button"><span>↻</span><div><strong>Opnieuw beginnen</strong><small>Verwijder alle lokale gegevens</small></div><b>›</b></button>
       </div>

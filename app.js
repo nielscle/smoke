@@ -433,7 +433,8 @@ $('#saveSlipBtn').addEventListener('click',()=>{
   closeOverlay('slipModal'); updateDashboard(); showToast('Geregistreerd. Ga vanaf nu direct verder.');
 });
 
-$('#topMoreBtn').addEventListener('click',()=>{$('#topMoreBtn').setAttribute('aria-expanded','true');openOverlay('moreMenu');});
+$('#moreMenuBtn').addEventListener('click',()=>{$('#moreMenuBtn').setAttribute('aria-expanded','true');openOverlay('moreMenu');});
+$('#menuFinance').addEventListener('click',()=>{closeOverlay('moreMenu');setScreen('finance');});
 $('#menuSources').addEventListener('click',()=>{closeOverlay('moreMenu');setScreen('body');setTimeout(()=>$('.source-card').scrollIntoView({behavior:'smooth',block:'center'}),250);});
 $('#menuReset').addEventListener('click',()=>{closeOverlay('moreMenu');if(confirm('Wil je alle lokale gegevens verwijderen en opnieuw beginnen?')){localStorage.clear();location.reload();}});
 $$('[data-close]').forEach(btn=>btn.addEventListener('click',()=>closeOverlay(btn.dataset.close)));
