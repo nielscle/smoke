@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reclaim — Stoppen met roken</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <header class="topbar">
+      <div>
+        <span class="eyebrow">RECLAIM</span>
+        <h1 id="greeting">Goedenavond</h1>
+      </div>
+      <button id="resetBtn" class="icon-btn" aria-label="Reset app">↻</button>
+    </header>
+
+    <main>
+      <section id="onboarding" class="screen active">
+        <div class="hero-card">
+          <div class="hero-icon">🫁</div>
+          <span class="eyebrow">JOUW HERSTEL BEGINT HIER</span>
+          <h2>Maak zichtbaar wat stoppen met roken voor je lichaam doet.</h2>
+          <p>Vul je gegevens in en krijg een persoonlijke gezondheidstijdlijn, dagelijkse inzichten en ondersteuning bij trek.</p>
+        </div>
+
+        <form id="onboardingForm" class="form-card">
+          <label>Naam
+            <input id="name" type="text" placeholder="Bijvoorbeeld Niels" required />
+          </label>
+          <div class="grid-2">
+            <label>Sigaretten per dag
+              <input id="cigsPerDay" type="number" min="1" max="80" value="12" required />
+            </label>
+            <label>Prijs per pakje (€)
+              <input id="packPrice" type="number" min="1" max="50" step="0.1" value="12" required />
+            </label>
+          </div>
+          <div class="grid-2">
+            <label>Sigaretten per pakje
+              <input id="packSize" type="number" min="10" max="60" value="20" required />
+            </label>
+            <label>Rookt sinds
+              <input id="startYear" type="number" min="1950" max="2026" value="2017" required />
+            </label>
+          </div>
+          <label>Stopdatum en tijd
+            <input id="quitDate" type="datetime-local" required />
+          </label>
+          <label>Belangrijkste reden
+            <select id="mainReason">
+              <option>Gezondheid en conditie</option>
+              <option>Vrijheid en controle</option>
+              <option>Geld besparen</option>
+              <option>Familie en toekomst</option>
+              <option>Sportprestaties</option>
+            </select>
+          </label>
+          <button class="primary-btn" type="submit">Start mijn herstelplan</button>
+        </form>
+      </section>
+
+      <section id="today" class="screen">
+        <div class="status-card">
+          <div class="status-top">
+            <div>
+              <span class="eyebrow">ROOKVRIJ</span>
+              <div id="smokeFreeTime" class="big-number">0 dagen</div>
+            </div>
+            <div class="streak-ring"><span id="streakDays">0</span><small>dagen</small></div>
+          </div>
+          <div class="progress-track"><div id="overallProgress" class="progress-fill"></div></div>
+          <p id="nextMilestoneText" class="muted">Je eerste gezondheidsmijlpaal komt eraan.</p>
+        </div>
+
+        <div class="section-heading">
+          <div><span class="eyebrow">VANDAAG IN JE LICHAAM</span><h2 id="dayTitle">Dag 1</h2></div>
+          <span class="pill">Persoonlijk</span>
+        </div>
+
+        <article id="dailyStory" class="story-card"></article>
+
+        <div class="metrics-grid">
+          <div class="metric-card"><span>Niet gerookt</span><strong id="notSmoked">0</strong><small>sigaretten</small></div>
+          <div class="metric-card"><span>Bespaard</span><strong id="moneySaved">€0</strong><small>sinds je stopte</small></div>
+          <div class="metric-card"><span>Levensduur</span><strong id="lifeSaved">0 min</strong><small>geschat teruggewonnen</small></div>
+          <div class="metric-card"><span>Volgende stap</span><strong id="nextMilestone">20 min</strong><small>gezondheidsmijlpaal</small></div>
+        </div>
+
+        <button id="cravingShortcut" class="craving-banner">
+          <span class="craving-icon">⚡</span>
+          <span><strong>Ik heb nu trek</strong><small>Start direct een 5-minuten interventie</small></span>
+          <span>›</span>
+        </button>
+      </section>
+
+      <section id="body" class="screen">
+        <div class="section-heading"><div><span class="eyebrow">LICHAAMSKAART</span><h2>Bekijk je herstel per onderdeel</h2></div></div>
+        <div class="body-layout">
+          <div class="body-visual">
+            <div class="silhouette">
+              <button class="organ-dot brain active" data-organ="brain">🧠</button>
+              <button class="organ-dot lungs" data-organ="lungs">🫁</button>
+              <button class="organ-dot heart" data-organ="heart">❤️</button>
+              <button class="organ-dot blood" data-organ="blood">🩸</button>
+              <button class="organ-dot skin" data-organ="skin">✨</button>
+            </div>
+          </div>
+          <div id="organPanel" class="organ-panel"></div>
+        </div>
+      </section>
+
+      <section id="craving" class="screen">
+        <div id="cravingStart" class="craving-card">
+          <div class="craving-pulse">⚡</div>
+          <span class="eyebrow">NOODKNOP</span>
+          <h2>Deze trek gaat voorbij.</h2>
+          <p>Een craving piekt meestal kort. We begeleiden je vijf minuten door dit moment heen.</p>
+          <label>Hoe sterk is de trek nu?
+            <input id="cravingRange" type="range" min="1" max="10" value="7" />
+            <div class="range-labels"><span>1</span><strong id="cravingValue">7</strong><span>10</span></div>
+          </label>
+          <label>Wat is de trigger?
+            <select id="triggerSelect">
+              <option>Stress</option>
+              <option>Koffie</option>
+              <option>Na het eten</option>
+              <option>Alcohol</option>
+              <option>Sociale situatie</option>
+              <option>Verveling</option>
+              <option>Autorijden</option>
+            </select>
+          </label>
+          <button id="startCravingBtn" class="primary-btn">Start interventie</button>
+        </div>
+        <div id="cravingSession" class="craving-card hidden">
+          <span class="eyebrow">BLIJF BIJ DE TIMER</span>
+          <div id="timer" class="timer">05:00</div>
+          <h2 id="cravingInstruction">Adem rustig in door je neus.</h2>
+          <p id="cravingSubtext">Vier seconden in, zes seconden uit. Herhaal dit tien keer.</p>
+          <div class="breath-circle"></div>
+          <button id="finishCravingBtn" class="secondary-btn">Ik voel me rustiger</button>
+        </div>
+      </section>
+
+      <section id="progress" class="screen">
+        <div class="section-heading"><div><span class="eyebrow">VOORTGANG</span><h2>Je herstel in cijfers</h2></div></div>
+        <div class="progress-summary">
+          <div><span>Rookvrije dagen</span><strong id="progressDays">0</strong></div>
+          <div><span>Cravings doorstaan</span><strong id="cravingsBeaten">0</strong></div>
+          <div><span>Huidige reeks</span><strong id="currentStreak">0 d</strong></div>
+        </div>
+
+        <div class="chart-card">
+          <div class="card-title"><h3>Gezondheidsherstel</h3><span>Algemene indicatie</span></div>
+          <div id="healthBars" class="health-bars"></div>
+        </div>
+
+        <div class="goal-card">
+          <div>
+            <span class="eyebrow">SPAARDOEL</span>
+            <h3 id="goalName">Nieuwe hardloopschoenen</h3>
+            <p><strong id="goalSaved">€0</strong> van <span id="goalTarget">€180</span></p>
+          </div>
+          <button id="editGoalBtn" class="secondary-btn small">Aanpassen</button>
+          <div class="progress-track"><div id="goalProgress" class="progress-fill"></div></div>
+        </div>
+
+        <div class="checkin-card">
+          <h3>Dagelijkse check-in</h3>
+          <div class="checkin-row"><span>Energie</span><input id="energy" type="range" min="1" max="10" value="6"></div>
+          <div class="checkin-row"><span>Stemming</span><input id="mood" type="range" min="1" max="10" value="7"></div>
+          <div class="checkin-row"><span>Benauwdheid</span><input id="breathlessness" type="range" min="1" max="10" value="4"></div>
+          <button id="saveCheckin" class="primary-btn">Check-in opslaan</button>
+        </div>
+      </section>
+    </main>
+
+    <nav id="bottomNav" class="bottom-nav hidden">
+      <button data-screen="today" class="nav-item active"><span>⌂</span><small>Vandaag</small></button>
+      <button data-screen="body" class="nav-item"><span>◉</span><small>Lichaam</small></button>
+      <button data-screen="craving" class="nav-item main"><span>⚡</span><small>Trek</small></button>
+      <button data-screen="progress" class="nav-item"><span>↗</span><small>Voortgang</small></button>
+    </nav>
+  </div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-card">
+      <button id="closeModal" class="icon-btn modal-close">×</button>
+      <h3>Spaardoel aanpassen</h3>
+      <label>Doelnaam<input id="goalNameInput" type="text" value="Nieuwe hardloopschoenen"></label>
+      <label>Doelbedrag<input id="goalTargetInput" type="number" value="180"></label>
+      <button id="saveGoalBtn" class="primary-btn">Opslaan</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
